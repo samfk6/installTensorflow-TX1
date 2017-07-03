@@ -47,7 +47,7 @@ Once TensorFlow has finished building, this script may be used to create a 'whee
 $ pip install $HOME/<em>wheel file</em>
 
 
-###$ Thanks
+#### Thanks
 <ul>
 <li>https://github.com/jetsonhacks</li>
 <li>https://github.com/ljanyst</li>
