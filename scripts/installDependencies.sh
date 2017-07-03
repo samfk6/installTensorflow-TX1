@@ -10,3 +10,6 @@ sudo apt-get install zip unzip autoconf automake libtool curl zlib1g-dev maven -
 sudo apt-get install python-numpy swig python-dev python-pip python-wheel -y
 # Install opencv
 sudo apt-get install libopencv4tegra-python -y
+# Upgrade pip
+sudo pip install --upgrade pip
+

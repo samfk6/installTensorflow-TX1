@@ -25,6 +25,10 @@ TensorFlow should be built in the following order:
 
 Auto run all script and install tensorflow 1.2.0. Uses python 2.7.
 
+#### createSwap.sh
+
+Before installing TensorFlow, a swap file should be created (minimum of 8GB recommended). Use extra storage(SSD) to boot and buid tensorflow (least 25 GB)
+
 #### installPrerequisites.sh
 Installs Java and other dependencies needed. Also builds:
 
