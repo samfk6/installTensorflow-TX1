@@ -1,0 +1,64 @@
+diff --git a/tensorflow/core/kernels/batch_norm_op_gpu.cu.cc b/tensorflow/core/kernels/batch_norm_op_gpu.cu.cc 
+index 1c4184c..c1ac742 100644
+--- a/tensorflow/core/kernels/batch_norm_op_gpu.cu.cc
++++ b/tensorflow/core/kernels/batch_norm_op_gpu.cu.cc
+@@ -16,6 +16,7 @@ limitations under the License.
+ #if GOOGLE_CUDA
+ 
+ #define EIGEN_USE_GPU
++#define EIGEN_HAS_VARIADIC_TEMPLATES 0
+ 
+ #include "tensorflow/core/kernels/batch_norm_op.h"
+ 
+
+diff --git a/tensorflow/core/kernels/cwise_op_gpu_select.cu.cc b/tensorflow/core/kernels/cwise_op_gpu_select.cu.cc
+index a54dbdf..208883b 100644
+--- a/tensorflow/core/kernels/cwise_op_gpu_select.cu.cc
++++ b/tensorflow/core/kernels/cwise_op_gpu_select.cu.cc
+@@ -14,6 +14,7 @@ limitations under the License.
+ ==============================================================================*/
+ 
+ #if GOOGLE_CUDA
++#define EIGEN_HAS_VARIADIC_TEMPLATES 0
+ 
+ #include "tensorflow/core/kernels/cwise_ops_gpu_common.cu.h"
+ #include "third_party/eigen3/unsupported/Eigen/CXX11/Tensor"
+@@ -65,8 +66,12 @@ struct BatchSelectFunctor<GPUDevice, T> {
+     const int all_but_batch = then_flat_outer_dims.dimension(1);
+ 
+ #if !defined(EIGEN_HAS_INDEX_LIST)
+-    Eigen::array<int, 2> broadcast_dims{{ 1, all_but_batch }};
+-    Eigen::Tensor<int, 2>::Dimensions reshape_dims{{ batch, 1 }};
++    Eigen::array<int, 2> broadcast_dims;
++    broadcast_dims[0] = 1;
++    broadcast_dims[1] = all_but_batch;
++    Eigen::Tensor<int, 2>::Dimensions reshape_dims;
++    reshape_dims[0] = batch;
++    reshape_dims[1] = 1;
+ #else
+     Eigen::IndexList<Eigen::type2index<1>, int> broadcast_dims;
+     broadcast_dims.set(1, all_but_batch);
+
+diff --git a/tensorflow/core/kernels/softmax_op_gpu.cu.cc b/tensorflow/core/kernels/softmax_op_gpu.cu.cc
+index 3f7dd38..a93b9eb 100644
+--- a/tensorflow/core/kernels/softmax_op_gpu.cu.cc
++++ b/tensorflow/core/kernels/softmax_op_gpu.cu.cc
+@@ -16,6 +16,7 @@ limitations under the License.
+ #if GOOGLE_CUDA
+ 
+ #define EIGEN_USE_GPU
++#define EIGEN_HAS_VARIADIC_TEMPLATES 0
+ 
+ #include "tensorflow/core/kernels/softmax_op_functor.h"
+ 
+diff --git a/tensorflow/core/kernels/sparse_xent_op_gpu.cu.cc b/tensorflow/core/kernels/sparse_xent_op_gpu.cu.cc
+index d053966..a04a4d6 100644
+--- a/tensorflow/core/kernels/sparse_xent_op_gpu.cu.cc
++++ b/tensorflow/core/kernels/sparse_xent_op_gpu.cu.cc
+@@ -16,6 +16,7 @@ limitations under the License.
+ #if GOOGLE_CUDA
+ 
+ #define EIGEN_USE_GPU
++#define EIGEN_HAS_VARIADIC_TEMPLATES 0
+ 
+ #include "tensorflow/core/kernels/sparse_xent_op.h"
